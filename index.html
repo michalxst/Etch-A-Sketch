@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+
+        <div class="sizeInput">
+            <p> Choose the size of your board (square): </p>
+            <input type="number" min="1" max="100" id="squareSize"> 
+            <button class="buttons" id="goButton" >Change</button>
+        </div>
+        <button class="buttons" id="resetBtn">Reset your board</button>
+    </div>
+    <div class="container"></div>
+</body>
+
+<script>
+    
+    let numberOfSquares = 100;
+    const squareSizeInput = document.querySelector("#squareSize");
+    const changeSizeButton = document.querySelector("#goButton");
+
+    const divContainer = document.querySelector(".container");
+    
+    const changeNumberOfSquares = (numberOfSquares) => {    
+        divContainer.textContent = "";
+        for (let i = 0; i < numberOfSquares; i++) {
+            
+            const columnElement = document.createElement("div");
+            columnElement.classList.add("column");
+
+            for (let j = 0; j < numberOfSquares; j++) {
+                const rowElement = document.createElement("div");
+                rowElement.classList.add("row");
+                columnElement.appendChild(rowElement);
+                squareSizeVh = 50 / numberOfSquares;
+
+                rowElement.setAttribute("style", "width: " + squareSizeVh 
+                                                +"vh; height: " + squareSizeVh + "vh;")
+                                                
+            }
+            divContainer.appendChild(columnElement);   
+            
+        }
+        changeBackgroundColor();
+    }   
+
+    let changeBackgroundColor = () => {
+        let rowElements = document.getElementsByClassName("row");
+        document.addEventListener('DOMContentLoaded', () => {
+            for (let rowElement of rowElements){
+                rowElement.addEventListener("mouseenter", () => {
+                    rowElement.setAttribute("style", "width: " + squareSizeVh 
+                                                        +"vh; height: " + squareSizeVh + "vh;" 
+                                                        + "background-color: black")
+                });
+            }
+        });
+    }
+    
+    changeNumberOfSquares(numberOfSquares);
+
+
+        changeSizeButton.addEventListener("click", () => changeBackgroundColor());
+        changeSizeButton.addEventListener("click", () => changeNumberOfSquares(squareSizeInput.value));
+        
+
+
+
+
+
+</script>
+
+</html>
