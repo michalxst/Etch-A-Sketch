@@ -21,9 +21,10 @@
 
 <script>
     
-    let numberOfSquares = 100;
+    let numberOfSquares = 30;
     const squareSizeInput = document.querySelector("#squareSize");
     const changeSizeButton = document.querySelector("#goButton");
+    const resetButton = document.querySelector("#resetBtn");
 
     const divContainer = document.querySelector(".container");
     
@@ -45,14 +46,13 @@
                                                 
             }
             divContainer.appendChild(columnElement);   
-            
+                
         }
-        changeBackgroundColor();
+        drawOnBoard();
     }   
 
-    let changeBackgroundColor = () => {
-        let rowElements = document.getElementsByClassName("row");
-        document.addEventListener('DOMContentLoaded', () => {
+    const drawOnBoard = () => {
+        let rowElements = document.getElementsByClassName("row");        
             for (let rowElement of rowElements){
                 rowElement.addEventListener("mouseenter", () => {
                     rowElement.setAttribute("style", "width: " + squareSizeVh 
@@ -60,16 +60,32 @@
                                                         + "background-color: black")
                 });
             }
-        });
+        
+    }
+
+    const resetBoard = () => {
+        let rowElements = document.getElementsByClassName("row");
+            for (let rowElement of rowElements){
+                    rowElement.setAttribute("style", "width: " + squareSizeVh 
+                                                        +"vh; height: " + squareSizeVh + "vh;" 
+                                                        + "background-color: white")
+            };
+        
     }
     
+
+    changeSizeButton.addEventListener("click", (event) => {
+        changeNumberOfSquares(squareSizeInput.value);
+        drawOnBoard();
+    });
+
+    resetButton.addEventListener("click", (event) => {
+        resetBoard();
+
+    });
+
     changeNumberOfSquares(numberOfSquares);
-
-
-        changeSizeButton.addEventListener("click", () => changeBackgroundColor());
-        changeSizeButton.addEventListener("click", () => changeNumberOfSquares(squareSizeInput.value));
-        
-
+    
 
 
 
