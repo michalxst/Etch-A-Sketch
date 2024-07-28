@@ -4,32 +4,36 @@ body {
 }
 
 .header,
-.container,
-.sizeInput  {
+.container {
     display: flex;
 }
 
 .header {
-    justify-content: space-between;
-}
-
-.sizeInput {
-    gap: 10px;
-    margin: 10px;
+    justify-content: center;
 }
 
 .container {
+    padding: 20vh;
     height: 50vh;
     justify-content: center;
     margin: 50px 0;
+
 }
 
 
-.row {
-    width: 10px;
-    height: 10px;
+.row.black {
+    background-color: black;
+}
+
+.row.white {
     background-color: white;
-    margin: 1px;
-    flex: 1 1 auto;
 }
 
+.opacity {
+    opacity: 0.1;
+}
+
+#resetBtn {
+    border-radius: 5px;
+    padding: 20px;
+}

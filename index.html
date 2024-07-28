@@ -8,22 +8,28 @@
 </head>
 <body>
     <div class="header">
-
-        <div class="sizeInput">
-            <p> Choose the size of your board (square): </p>
-            <input type="number" min="1" max="100" id="squareSize"> 
-            <button class="buttons" id="goButton" >Change</button>
-        </div>
         <button class="buttons" id="resetBtn">Reset your board</button>
     </div>
     <div class="container"></div>
 </body>
 
 <script>
-    
-    let numberOfSquares = 30;
-    const squareSizeInput = document.querySelector("#squareSize");
-    const changeSizeButton = document.querySelector("#goButton");
+
+    const chooseNumberOfSquares = () => {
+        while (true) {
+            let numberOfSquares = prompt("How big do you want the grid to be? (1-100 squares)", 20);
+            if (numberOfSquares === null) {
+                return null;
+            }
+            numberOfSquares = Number(numberOfSquares);
+            if (numberOfSquares >= 1 && numberOfSquares <= 100) {
+                return numberOfSquares;
+            } else {
+                alert("Please enter a valid number between 1 and 100.");
+            }
+        }
+    }
+
     const resetButton = document.querySelector("#resetBtn");
 
     const divContainer = document.querySelector(".container");
@@ -37,12 +43,13 @@
 
             for (let j = 0; j < numberOfSquares; j++) {
                 const rowElement = document.createElement("div");
-                rowElement.classList.add("row");
+                rowElement.classList.add("row", "white");
+                let elementsID = "column" + i + "row" + j;
+                rowElement.setAttribute("id", elementsID);
                 columnElement.appendChild(rowElement);
                 squareSizeVh = 50 / numberOfSquares;
-
-                rowElement.setAttribute("style", "width: " + squareSizeVh 
-                                                +"vh; height: " + squareSizeVh + "vh;")
+                rowElement.style.width = `${squareSizeVh}vh`;
+                rowElement.style.height = `${squareSizeVh}vh`;
                                                 
             }
             divContainer.appendChild(columnElement);   
@@ -52,39 +59,47 @@
     }   
 
     const drawOnBoard = () => {
-        let rowElements = document.getElementsByClassName("row");        
+        const rowElements = document.getElementsByClassName("row");        
             for (let rowElement of rowElements){
                 rowElement.addEventListener("mouseenter", () => {
-                    rowElement.setAttribute("style", "width: " + squareSizeVh 
-                                                        +"vh; height: " + squareSizeVh + "vh;" 
-                                                        + "background-color: black")
+                    const elementClasses = rowElement.classList;
+                    const elementsID = rowElement.getAttribute("id");
+                    const currentElement = document.querySelector("#" + elementsID);
+                    const css = getComputedStyle(currentElement);
+                    const bgColor = css.getPropertyValue("background-color");
+                    const opacity = css.getPropertyValue("opacity");
+                    if (bgColor == "rgb(255, 255, 255)") {
+                        currentElement.style.backgroundColor = "rgb(0, 0, 0)";
+                        currentElement.style.opacity = 0.1;
+                    }
+                    if (opacity >= 0.1 && opacity < 1) {
+                        let newOpacity = Number(opacity);
+                        newOpacity += 0.1;
+                        currentElement.style.opacity = newOpacity;
+                    }
                 });
             }
         
     }
 
+
+
     const resetBoard = () => {
         let rowElements = document.getElementsByClassName("row");
             for (let rowElement of rowElements){
-                    rowElement.setAttribute("style", "width: " + squareSizeVh 
-                                                        +"vh; height: " + squareSizeVh + "vh;" 
-                                                        + "background-color: white")
+                rowElement.classList.remove("black");
+                rowElement.classList.add("white");
             };
         
     }
     
-
-    changeSizeButton.addEventListener("click", (event) => {
-        changeNumberOfSquares(squareSizeInput.value);
-        drawOnBoard();
-    });
 
     resetButton.addEventListener("click", (event) => {
         resetBoard();
 
     });
 
-    changeNumberOfSquares(numberOfSquares);
+    changeNumberOfSquares(chooseNumberOfSquares());
     
 
 
