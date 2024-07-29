@@ -43,7 +43,7 @@
 
             for (let j = 0; j < numberOfSquares; j++) {
                 const rowElement = document.createElement("div");
-                rowElement.classList.add("row", "white");
+                rowElement.classList.add("row");
                 let elementsID = "column" + i + "row" + j;
                 rowElement.setAttribute("id", elementsID);
                 columnElement.appendChild(rowElement);
@@ -62,7 +62,6 @@
         const rowElements = document.getElementsByClassName("row");        
             for (let rowElement of rowElements){
                 rowElement.addEventListener("mouseenter", () => {
-                    const elementClasses = rowElement.classList;
                     const elementsID = rowElement.getAttribute("id");
                     const currentElement = document.querySelector("#" + elementsID);
                     const css = getComputedStyle(currentElement);
@@ -83,12 +82,13 @@
     }
 
 
-
     const resetBoard = () => {
-        let rowElements = document.getElementsByClassName("row");
+        const rowElements = document.getElementsByClassName("row");
             for (let rowElement of rowElements){
-                rowElement.classList.remove("black");
-                rowElement.classList.add("white");
+                const elementsID = rowElement.getAttribute("id");
+                const currentElement = document.querySelector("#" + elementsID);
+                currentElement.style.backgroundColor = "white";
+                currentElement.style.opacity = 1;
             };
         
     }

@@ -20,17 +20,8 @@ body {
 
 }
 
-
-.row.black {
-    background-color: black;
-}
-
-.row.white {
+.row {
     background-color: white;
-}
-
-.opacity {
-    opacity: 0.1;
 }
 
 #resetBtn {
